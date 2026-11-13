@@ -1,0 +1,13 @@
+{
+  "version": "0.5.0-alpha",
+  "platforms": {
+    "linux-x86_64": {
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.5.0-alpha/GSM-Linux-x86_64-0.5.0-alpha.run",
+      "sha256": "a822179e6168f85ad8cd54ae98713f806b81fe2f26028a5d73374b562e3408eb"
+    },
+    "windows-x64": {
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.5.0-alpha/GSM-Setup-0.5.0-alpha.exe",
+      "sha256": "33019e84950e65b2376c18d195d1b0fd0f7d172e2ed7fa8a7ad778d9fe0964cf"
+    }
+  }
+}
