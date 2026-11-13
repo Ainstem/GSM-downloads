@@ -20,7 +20,7 @@ Quem usa 0.3/0.4 precisa executar o primeiro instalador uma vez para receber o a
 
 1. No build validado de `Ainstem/GSM`, baixe os artifacts Linux e Windows e extraia os ZIPs do GitHub.
 2. [Crie uma Release](https://github.com/Ainstem/GSM-downloads/releases/new) com a tag `v0.5.0-alpha` (ou a versão correspondente).
-3. Anexe os arquivos **GSM-Linux-x86_64-0.5.0-alpha.run** e **GSM-Setup-0.5.0-alpha.exe**. Ambos devem estar anexados antes de publicar.
+3. Anexe os arquivos **GSM-Linux-x86_64-0.5.0-alpha.run** e **GSM-Setup-0.5.0-alpha.exe**. Anexe também **GSM-Linux-Media-Sources-0.5.0-alpha.tar.gz**, que oferece as fontes correspondentes. Os três arquivos devem estar anexados antes de publicar.
 4. Publique a Release. O workflow **Publish update channel** calcula SHA-256, publica `update.json` e `SHA256SUMS` na Release e atualiza o manifesto público em `main`.
 5. Confira o resultado em Actions. Somente depois os apps recebem o aviso. Não precisa criar tokens pessoais.
 
