@@ -23,7 +23,7 @@ jobs:
           GSM_TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
           mkdir installers
-          gh release download "$GSM_TAG" --repo "$GITHUB_REPOSITORY" --dir installers --pattern 'GSM-Linux-x86_64-*.run' --pattern 'GSM-Setup-*.exe'
+          gh release download "$GSM_TAG" --repo "$GITHUB_REPOSITORY" --dir installers --pattern 'GSM-Linux-x86_64-*.run' --pattern 'GSM-Setup-*.exe' --pattern 'GSM-Linux-Media-Sources-*.tar.gz'
       - name: Build update manifest
         env:
           GSM_TAG: ${{ github.event.release.tag_name || inputs.tag }}
