@@ -1,0 +1,48 @@
+name: Publish update channel
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing release tag (for example v0.5.0-alpha)
+        required: true
+permissions:
+  contents: write
+concurrency:
+  group: update-channel
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download published installers
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GSM_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          mkdir installers
+          gh release download "$GSM_TAG" --repo "$GITHUB_REPOSITORY" --dir installers --pattern 'GSM-Linux-x86_64-*.run' --pattern 'GSM-Setup-*.exe'
+      - name: Build update manifest
+        env:
+          GSM_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: python3 make-manifest.py "$GSM_TAG" installers
+      - name: Publish channel and checksum files
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GSM_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          gh release upload "$GSM_TAG" update.json SHA256SUMS --clobber --repo "$GITHUB_REPOSITORY"
+          python3 - <<'PY'
+          import base64,json,subprocess,os
+          try:
+              previous=json.loads(subprocess.check_output(['gh','api',f'repos/{os.environ["GITHUB_REPOSITORY"]}/contents/update.json']))
+              sha=previous['sha']
+          except subprocess.CalledProcessError:
+              sha=None
+          body={'message':'Publish update channel '+os.environ['GSM_TAG'],'content':base64.b64encode(open('update.json','rb').read()).decode(),'branch':'main'}
+          if sha: body['sha']=sha
+          open('/tmp/update-request.json','w').write(json.dumps(body))
+          PY
+          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/update.json" --input /tmp/update-request.json > /dev/null
