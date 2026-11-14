@@ -10,20 +10,22 @@
       "kind": "linux",
       "filename": "GSM-Linux-x86_64-0.8.0-alpha.run",
       "sha256": "146c9e831bd3a57ce69cfac2f5fd15897dd6f4baf84e2aecf080935376897687",
-      "archive": false
+      "archive": false,
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.8.0-alpha/GSM-Linux-x86_64-0.8.0-alpha.run"
     },
     {
       "kind": "windows",
       "filename": "GSM-Setup-0.8.0-alpha.exe",
       "sha256": "21f993d45c74eefa6761099f897843381dde32452e3306be84c0b67ac2dea6f2",
-      "archive": false
+      "archive": false,
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.8.0-alpha/GSM-Setup-0.8.0-alpha.exe"
     },
     {
       "kind": "sources",
       "filename": "GSM-Linux-Media-Sources-0.8.0-alpha.tar.gz",
       "sha256": "c04d6db7a40f022b74c7076605121a6762e01bcbe8f41f4899e04adefb7c339b",
-      "archive": false
+      "archive": false,
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.8.0-alpha/GSM-Linux-Media-Sources-0.8.0-alpha.tar.gz"
     }
-  ],
-  "sealed_transfer": true
+  ]
 }
