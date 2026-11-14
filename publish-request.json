@@ -8,39 +8,23 @@
     {
       "kind": "linux",
       "filename": "GSM-Linux-x86_64-0.6.0-alpha.run",
-      "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-8ea8-820e-997d-a18478af364b/raw?se=2026-11-14T02%3A54%3A37Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A24%3A46Z&ske=2026-11-14T19%3A24%3A46Z&sks=b&skv=2026-06-06&sig=sHx%2BQLHE4s4wgZWEwbd7uQR3SoPdjARBC%2BZYtBmJg%2Bs%3D",
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.6.0-alpha/GSM-Linux-x86_64-0.6.0-alpha.run",
       "sha256": "84908db9055825c93854966e4084ec99853dc97cb3656ac46057cb03d4ebf293",
-      "archive": true,
-      "archive_sha256": "3cce783ffffc9daf3c434a82e29b808a96f3b66a08d6f809150f230fdc6e7eab"
+      "archive": false
     },
     {
       "kind": "windows",
       "filename": "GSM-Setup-0.6.0-alpha.exe",
-      "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-17bc-820e-93bb-380c240ef551/raw?se=2026-11-14T02%3A54%3A32Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A38%3A49Z&ske=2026-11-14T19%3A38%3A49Z&sks=b&skv=2026-06-06&sig=TZuHX9WHSAdAYnI51TI3jtZJRrwQYfOGCzq9BrAms6o%3D",
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.6.0-alpha/GSM-Setup-0.6.0-alpha.exe",
       "sha256": "d862ecf3a1647b1e709be63fea4a1ac255a4a0461adcbfccb0285e59233e08f8",
-      "archive": true,
-      "archive_sha256": "467dde8e331d80dbb6386a712915cc34e50aada0b693b2860a9719b007ce27ac"
+      "archive": false
     },
     {
       "kind": "sources",
       "filename": "GSM-Linux-Media-Sources-0.6.0-alpha.tar.gz",
       "sha256": "c809715f5590ba630e26ad644460d97de1c2f7f02cf15ef9fbc99b4dcf9ed0a8",
-      "chunks": [
-        {
-          "filename": "GSM-Linux-Media-Sources-0.6.0-alpha.tar.gz.part-00",
-          "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-7200-820e-850b-b59940c9718e/raw?se=2026-11-14T02%3A54%3A20Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A29%3A29Z&ske=2026-11-14T19%3A29%3A29Z&sks=b&skv=2026-06-06&sig=vtw3tWeOUyO/PrGD1m4Sx9X%2BOEdGDK7OgN9Mt9t/90g%3D",
-          "sha256": "fd9d450dfb48f7fb85a21194e63d501ad93761dc88b540bb1dccc6d7b05da038",
-          "archive": true,
-          "archive_sha256": "9fee3857e127f139ea7335ff4a22426f7248e126de3eee1eb82c0efaae923ba3"
-        },
-        {
-          "filename": "GSM-Linux-Media-Sources-0.6.0-alpha.tar.gz.part-01",
-          "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-1ca8-820e-8b08-83600aefd8e4/raw?se=2026-11-14T02%3A54%3A12Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A41%3A16Z&ske=2026-11-14T19%3A41%3A16Z&sks=b&skv=2026-06-06&sig=wtkv9gADldpMSylcEIa0oY%2BxIBhfeU0y8bPMYqbiAvw%3D",
-          "sha256": "f28f68511d4a69ad24c3be731e0e6d33ab50e48decb762da7b5153780ad1297d",
-          "archive": true,
-          "archive_sha256": "e6a4d46f837b20dd9a3e2735932a0fd0edafd2d45de8658d63a49aa817d6321a"
-        }
-      ]
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.6.0-alpha/GSM-Linux-Media-Sources-0.6.0-alpha.tar.gz",
+      "archive": false
     }
   ]
 }
