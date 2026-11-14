@@ -1,30 +1,46 @@
 {
-  "version": "0.6.0-alpha",
-  "title": "GSM 0.6.0-alpha",
-  "source_commit": "0542d024be37b6c67d43b45ba67858dd0b875b7d",
-  "validation_run": 43547175567,
-  "notes": "# GSM 0.6.0-alpha\n\n## Novidades\n- Visual renovado: biblioteca em grade ou lista, busca, perfil e novo ícone GSM.\n- Primeiro acesso com Discord ou uso sem login. A escolha permanece salva nas próximas atualizações.\n- Perfil local com nome e foto. Ao conectar o Discord, o app usa o nome e a foto da conta autorizada.\n- Login Discord pelo navegador com PKCE e credenciais protegidas pelo sistema quando disponível.\n- Atividade no Discord vinculada à conta conectada, com opção de desligar.\n- Atualizações em uma janela central com versão, novidades e confirmação antes de instalar.\n\n## Captura e edição\n- Windows leva FFmpeg e ffprobe: visualizar miniaturas e recortar não exige instalação separada.\n- Encoders AMD, NVIDIA e Intel, com alternativa por software no Windows quando o hardware não iniciar.\n- Captura compatível do desktop em PCs Windows que só oferecem o adaptador de vídeo por software.\n- Wayland usa o seletor de tela do sistema e lembra a seleção quando o desktop permitir. Cancelar não provoca uma tentativa de gravação como administrador.\n- Controles de replay editáveis na própria página e menus que fecham ao clicar novamente.\n- Editor com linha do tempo, bordas de recorte, navegação entre clipes e player expandido.\n- Em gravações com faixas separadas, desktop e microfone podem ser ativados/desativados independentemente no recorte.\n- Atalhos configuráveis no app. No Windows, também é possível combinar duas ou três letras/números simultâneos, como W+E.\n- Aviso sonoro após salvar e mensagens com botão para fechar.\n- Compartilhamento no Discord por arrastar o arquivo para a conversa escolhida; o envio é confirmado no cliente Discord.\n\n## Compatibilidade e limites desta alpha\n- Windows 10 x64 a partir de 1809 e Windows 11 x64. Sistemas Windows de 32 bits não são suportados.\n- O acesso inicial à tela depende da autorização obrigatória do sistema; conteúdo protegido pode impedir a captura.\n- Atalhos globais usam os mecanismos permitidos pelo sistema. W+E simultâneo no Wayland não é suportado sem o acesso ao teclado que o usuário optou por não conceder.\n- O login não concede permissão para enviar mensagens privadas arbitrárias pela API do Discord.\n- Esta Release é para desktop. Um app Android com gravação e acesso aos clipes do PC requer um pacote e validação próprios e não está incluído nestes instaladores.\n",
+  "version": "0.6.1-alpha",
+  "title": "GSM 0.6.1-alpha",
+  "source_commit": "da848495dfa20bef217ca41beb61dece3299dc12",
+  "validation_run": 43554651630,
+  "notes": "# GSM 0.6.1-alpha\n\n## Correção da captura no Linux\n- Inclui os plugins SPA e os módulos do cliente PipeWire que faltavam no instalador.\n- Corrige a falha `can’t make support.system handle` ao ativar o replay após selecionar a tela no Wayland.\n- O gravador carrega seus componentes PipeWire compatíveis com a biblioteca incluída, sem depender dos caminhos de plugins da distribuição e sem alterar o serviço de áudio/vídeo do sistema.\n- Preserva os clipes, o perfil, o login e as configurações existentes durante a atualização.\n\nO seletor de tela do Linux continua exigindo autorização do usuário. Esta correção trata da inicialização do PipeWire; a captura no compositor e na GPU de cada PC ainda precisa ser validada no próprio equipamento.\n\n## Interface e personalização\n- Nova seção Personalizar para nome, foto e cor de destaque, com preferências salvas.\n- Menus, seletores e diálogos com bordas, cores e tamanhos consistentes.\n- Títulos e navegação mais compactos; controles de reprodução discretos e linha do tempo menor para dar mais espaço ao vídeo.\n- Avisos longos ficam resumidos e podem ser consultados em Detalhes, sem ocupar a área do editor.\n- Cursor de mão nas ações clicáveis e lista de telas conectadas atualizada ao conectar/remover monitores.\n- Navegação no topo com Biblioteca, Replay e Configurações; cartões com miniatura e controles organizados em painéis responsivos.\n- Nome e foto importados do Discord podem ser personalizados no GSM, com alterações lembradas por conta sem modificar o perfil no Discord.\n- Opções dos seletores e menus têm divisórias discretas; clicar novamente no mesmo botão fecha o menu.\n- Primeiro acesso em uma tela simples e compacta; a escolha de login continua aparecendo apenas uma vez.\n",
   "assets": [
     {
       "kind": "linux",
-      "filename": "GSM-Linux-x86_64-0.6.0-alpha.run",
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.6.0-alpha/GSM-Linux-x86_64-0.6.0-alpha.run",
-      "sha256": "84908db9055825c93854966e4084ec99853dc97cb3656ac46057cb03d4ebf293",
-      "archive": false
+      "filename": "GSM-Linux-x86_64-0.6.1-alpha.run",
+      "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-5064-820e-afd8-dc9abd4ee466/raw?se=2026-11-14T04%3A15%3A36Z&sp=r&sv=2026-06-06&sr=b&scid=88f68afd-91f2-4481-a7f0-16bf212c27a5&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A29%3A29Z&ske=2026-11-14T19%3A29%3A29Z&sks=b&skv=2026-06-06&sig=RpHEchAjm3w7Q9DAG1jgXNeL4/zOmt4LcQjC3hDLjcg%3D",
+      "sha256": "71ab2b74bb80a8804a4bb17cfff0a588b4b8e70767d2c54727050ec61549e893",
+      "archive": true,
+      "archive_sha256": "0aa31eb800b57d36ca0fa9cadcd966c46b39841ec369b32f58ff1935309a6a6c"
     },
     {
       "kind": "windows",
-      "filename": "GSM-Setup-0.6.0-alpha.exe",
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.6.0-alpha/GSM-Setup-0.6.0-alpha.exe",
-      "sha256": "d862ecf3a1647b1e709be63fea4a1ac255a4a0461adcbfccb0285e59233e08f8",
-      "archive": false
+      "filename": "GSM-Setup-0.6.1-alpha.exe",
+      "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-d4dc-820e-8bda-32acfa8c2d8e/raw?se=2026-11-14T04%3A15%3A30Z&sp=r&sv=2026-06-06&sr=b&scid=88f68afd-91f2-4481-a7f0-16bf212c27a5&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A24%3A55Z&ske=2026-11-14T19%3A24%3A55Z&sks=b&skv=2026-06-06&sig=FFHEPCFvrhRe8yUtRhag0PDoAcyWn5MyNJRas4Rxpg0%3D",
+      "sha256": "cdf2cfd2461956b9beb8f762a1eb12f67ba797b76a551d085bcca4ae66904d34",
+      "archive": true,
+      "archive_sha256": "dd07b5b0db04a9130da5a3a23bcdbae57dfab7cd470377b3c7a9e548f591592c"
     },
     {
       "kind": "sources",
-      "filename": "GSM-Linux-Media-Sources-0.6.0-alpha.tar.gz",
-      "sha256": "c809715f5590ba630e26ad644460d97de1c2f7f02cf15ef9fbc99b4dcf9ed0a8",
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.6.0-alpha/GSM-Linux-Media-Sources-0.6.0-alpha.tar.gz",
-      "archive": false
+      "filename": "GSM-Linux-Media-Sources-0.6.1-alpha.tar.gz",
+      "sha256": "8859f411d25a06ca4d1565dcad215792303faf92776802d86e0f6d5d3a7e8d63",
+      "chunks": [
+        {
+          "filename": "GSM-Linux-Media-Sources-0.6.1-alpha.tar.gz.part-00",
+          "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-a53c-820e-8fed-13777d7273e4/raw?se=2026-11-14T04%3A15%3A05Z&sp=r&sv=2026-06-06&sr=b&scid=88f68afd-91f2-4481-a7f0-16bf212c27a5&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A41%3A16Z&ske=2026-11-14T19%3A41%3A16Z&sks=b&skv=2026-06-06&sig=bKBk3nI6FKJpbtVRMTKfGzyqQjWcpnzVlfsxznE6roQ%3D",
+          "sha256": "1618decce9956dd9f1b3e827ba468fd4b489fed71d610e8c74485cb56d212aa1",
+          "archive": true,
+          "archive_sha256": "29bb24bda8dacd5484f21f7ca916b8740b5806858e10c4f26220570ee82e59ea"
+        },
+        {
+          "filename": "GSM-Linux-Media-Sources-0.6.1-alpha.tar.gz.part-01",
+          "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-04d0-820e-8466-c91d2af79bac/raw?se=2026-11-14T04%3A15%3A08Z&sp=r&sv=2026-06-06&sr=b&scid=88f68afd-91f2-4481-a7f0-16bf212c27a5&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A38%3A49Z&ske=2026-11-14T19%3A38%3A49Z&sks=b&skv=2026-06-06&sig=G9p4p%2B17KiUjm9iuTur%2B91MTE9hqBdvRXs7/eoRgx8Y%3D",
+          "sha256": "3703a48c318e3117c6bb7da6114da2b515360674e24a5c8be4f8b1bda2726950",
+          "archive": true,
+          "archive_sha256": "7d5c10a8e6d9bacc1060526f175a923cb3f56292acfd7ea22078e1b904983b87"
+        }
+      ]
     }
   ]
 }
