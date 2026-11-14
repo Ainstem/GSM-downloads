@@ -1,0 +1,72 @@
+name: Publish verified GSM release
+on:
+  push:
+    paths: [publish-request.json]
+permissions:
+  contents: write
+concurrency:
+  group: update-channel
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.event.head_commit.message != 'Complete verified release transfer'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test checksum and archive guards
+        run: python3 test-prepare-release.py
+      - name: Download and verify the tested installers and corresponding sources
+        id: metadata
+        run: python3 prepare-release.py publish-request.json installers
+      - name: Build channel and checksums from the verified files
+        env:
+          GSM_TAG: ${{ steps.metadata.outputs.tag }}
+        run: python3 make-manifest.py "$GSM_TAG" installers release-info.json
+      - name: Publish all files before advertising the update
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GSM_TAG: ${{ steps.metadata.outputs.tag }}
+        run: |
+          title=$(python3 -c 'import json; print(json.load(open("release-info.json"))["name"])')
+          if gh release view "$GSM_TAG" --repo "$GITHUB_REPOSITORY" --json isDraft > existing.json 2>/dev/null; then
+            python3 -c 'import json; assert json.load(open("existing.json"))["isDraft"], "Release is already public; refusing to replace published binaries"'
+          else
+            gh release create "$GSM_TAG" --draft --prerelease --title "$title" --notes-file release-notes.md --repo "$GITHUB_REPOSITORY"
+          fi
+          gh release upload "$GSM_TAG" installers/* update.json SHA256SUMS --clobber --repo "$GITHUB_REPOSITORY"
+          gh release edit "$GSM_TAG" --title "$title" --notes-file release-notes.md --draft=false --repo "$GITHUB_REPOSITORY"
+      - name: Verify public availability and update the channel
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          import base64,json,os,subprocess,time,urllib.request
+          request=json.load(open('publish-request.json'));version=request['version'];repo=os.environ['GITHUB_REPOSITORY']
+          for item in request['assets']:
+              address=f'https://github.com/{repo}/releases/download/v{version}/'+item['filename']
+              for attempt in range(5):
+                  try:
+                      with urllib.request.urlopen(urllib.request.Request(address,method='HEAD'),timeout=30):pass
+                      break
+                  except Exception:
+                      if attempt==4:raise
+                      time.sleep(3)
+          previous=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/contents/update.json']))
+          old=json.loads(base64.b64decode(previous['content']))
+          def version_key(value):
+              main,separator,pre=value.partition('-')
+              return (*map(int,main.split('.')),not separator,tuple((0,int(x)) if x.isdigit() else (1,x) for x in pre.split('.')))
+          if version_key(old['version'])>version_key(version):raise RuntimeError('Refusing to downgrade the public channel')
+          body={'message':'Publish verified GSM '+version,'sha':previous['sha'],'branch':'main','content':base64.b64encode(open('update.json','rb').read()).decode()}
+          open('/tmp/channel-request.json','w').write(json.dumps(body))
+          subprocess.run(['gh','api','--method','PUT',f'repos/{repo}/contents/update.json','--input','/tmp/channel-request.json'],check=True,stdout=subprocess.DEVNULL)
+          # Keep the audit metadata, replacing expired transfer links with the permanent public download URLs.
+          current=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/contents/publish-request.json']))
+          for item in request['assets']:
+              item['url']=f'https://github.com/{repo}/releases/download/v{version}/'+item['filename']
+              item.pop('archive_sha256',None);item['archive']=False
+          body={'message':'Complete verified release transfer','sha':current['sha'],'branch':'main','content':base64.b64encode((json.dumps(request,indent=2,ensure_ascii=False)+'\n').encode()).decode()}
+          open('/tmp/transfer-request.json','w').write(json.dumps(body))
+          subprocess.run(['gh','api','--method','PUT',f'repos/{repo}/contents/publish-request.json','--input','/tmp/transfer-request.json'],check=True,stdout=subprocess.DEVNULL)
+          PY
