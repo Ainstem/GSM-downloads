@@ -24,11 +24,18 @@ def validate_request(data):
         raise ValueError('Exactly the Linux installer, Windows installer and corresponding sources are required')
     for item in assets:
         if item.get('filename')!=expected[item['kind']]: raise ValueError('Unexpected asset filename')
-        address=urllib.parse.urlsplit(item.get('url',''));host=address.hostname or ''
-        if address.scheme!='https' or address.username or address.password or address.fragment or not(host=='github.com' or host.endswith('.oaiusercontent.com')):
-            raise ValueError('Untrusted release transfer URL')
-        for name in ['sha256']+(['archive_sha256'] if item.get('archive') else []):
-            if not re.fullmatch(r'[a-f0-9]{64}',item.get(name,'')): raise ValueError('Missing SHA256 for release transfer')
+        if not re.fullmatch(r'[a-f0-9]{64}',item.get('sha256','')):raise ValueError('Missing release file SHA256')
+        parts=item.get('chunks')
+        if parts:
+            if item['kind']!='sources' or not 2<=len(parts)<=8:raise ValueError('Only corresponding sources may use a chunk transfer')
+            for index,part in enumerate(parts):
+                if part.get('filename')!=item['filename']+f'.part-{index:02d}':raise ValueError('Unexpected source chunk order')
+        for part in parts or [item]:
+            address=urllib.parse.urlsplit(part.get('url',''));host=address.hostname or ''
+            if address.scheme!='https' or address.username or address.password or address.fragment or not(host=='github.com' or host.endswith('.oaiusercontent.com')):
+                raise ValueError('Untrusted release transfer URL')
+            for name in ['sha256']+(['archive_sha256'] if part.get('archive') else []):
+                if not re.fullmatch(r'[a-f0-9]{64}',part.get(name,'')):raise ValueError('Missing SHA256 for release transfer')
     if not isinstance(data.get('notes'),str) or not data['notes'].strip():raise ValueError('Release notes are required')
     if len(data['notes'])>12000:raise ValueError('Release notes exceed channel size limit')
     if not re.fullmatch(r'[a-f0-9]{40}',data.get('source_commit','')):raise ValueError('Tested source commit is required')
@@ -48,6 +55,24 @@ def copy_checked(source,destination,expected):
 
 def materialize(item,directory,opener=urllib.request.urlopen):
     destination=directory/item['filename']
+    if item.get('chunks'):
+        with tempfile.TemporaryDirectory() as work:
+            root=Path(work)
+            with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+                futures=[pool.submit(materialize,part,root,opener) for part in item['chunks']]
+                for future in futures:future.result()
+            digest=hashlib.sha256();total=0
+            with destination.open('wb') as out:
+                for part in item['chunks']:
+                    with (root/part['filename']).open('rb') as stream:
+                        while chunk:=stream.read(1024*1024):
+                            total+=len(chunk)
+                            if total>2147483648:raise ValueError('Joined source archive exceeds size limit')
+                            digest.update(chunk);out.write(chunk)
+            if digest.hexdigest()!=item['sha256']:
+                destination.unlink(missing_ok=True);raise ValueError('Reassembled source archive checksum mismatch')
+        print('Verified reassembled '+destination.name+' '+item['sha256'],flush=True)
+        return
     # The transfer grants access only to the intended public artifact; mask its temporary URL in CI logs.
     if os.environ.get('GITHUB_ACTIONS'):print('::add-mask::'+item['url'],flush=True)
     with tempfile.TemporaryDirectory() as work:
