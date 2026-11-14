@@ -65,7 +65,7 @@ jobs:
           current=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/contents/publish-request.json']))
           for item in request['assets']:
               item['url']=f'https://github.com/{repo}/releases/download/v{version}/'+item['filename']
-              item.pop('archive_sha256',None);item['archive']=False
+              item.pop('archive_sha256',None);item.pop('chunks',None);item['archive']=False
           body={'message':'Complete verified release transfer','sha':current['sha'],'branch':'main','content':base64.b64encode((json.dumps(request,indent=2,ensure_ascii=False)+'\n').encode()).decode()}
           open('/tmp/transfer-request.json','w').write(json.dumps(body))
           subprocess.run(['gh','api','--method','PUT',f'repos/{repo}/contents/publish-request.json','--input','/tmp/transfer-request.json'],check=True,stdout=subprocess.DEVNULL)
