@@ -1,0 +1,46 @@
+{
+  "version": "0.6.0-alpha",
+  "title": "GSM 0.6.0-alpha",
+  "source_commit": "0542d024be37b6c67d43b45ba67858dd0b875b7d",
+  "validation_run": 43547175567,
+  "notes": "# GSM 0.6.0-alpha\n\n## Novidades\n- Visual renovado: biblioteca em grade ou lista, busca, perfil e novo ícone GSM.\n- Primeiro acesso com Discord ou uso sem login. A escolha permanece salva nas próximas atualizações.\n- Perfil local com nome e foto. Ao conectar o Discord, o app usa o nome e a foto da conta autorizada.\n- Login Discord pelo navegador com PKCE e credenciais protegidas pelo sistema quando disponível.\n- Atividade no Discord vinculada à conta conectada, com opção de desligar.\n- Atualizações em uma janela central com versão, novidades e confirmação antes de instalar.\n\n## Captura e edição\n- Windows leva FFmpeg e ffprobe: visualizar miniaturas e recortar não exige instalação separada.\n- Encoders AMD, NVIDIA e Intel, com alternativa por software no Windows quando o hardware não iniciar.\n- Captura compatível do desktop em PCs Windows que só oferecem o adaptador de vídeo por software.\n- Wayland usa o seletor de tela do sistema e lembra a seleção quando o desktop permitir. Cancelar não provoca uma tentativa de gravação como administrador.\n- Controles de replay editáveis na própria página e menus que fecham ao clicar novamente.\n- Editor com linha do tempo, bordas de recorte, navegação entre clipes e player expandido.\n- Em gravações com faixas separadas, desktop e microfone podem ser ativados/desativados independentemente no recorte.\n- Atalhos configuráveis no app. No Windows, também é possível combinar duas ou três letras/números simultâneos, como W+E.\n- Aviso sonoro após salvar e mensagens com botão para fechar.\n- Compartilhamento no Discord por arrastar o arquivo para a conversa escolhida; o envio é confirmado no cliente Discord.\n\n## Compatibilidade e limites desta alpha\n- Windows 10 x64 a partir de 1809 e Windows 11 x64. Sistemas Windows de 32 bits não são suportados.\n- O acesso inicial à tela depende da autorização obrigatória do sistema; conteúdo protegido pode impedir a captura.\n- Atalhos globais usam os mecanismos permitidos pelo sistema. W+E simultâneo no Wayland não é suportado sem o acesso ao teclado que o usuário optou por não conceder.\n- O login não concede permissão para enviar mensagens privadas arbitrárias pela API do Discord.\n- Esta Release é para desktop. Um app Android com gravação e acesso aos clipes do PC requer um pacote e validação próprios e não está incluído nestes instaladores.\n",
+  "assets": [
+    {
+      "kind": "linux",
+      "filename": "GSM-Linux-x86_64-0.6.0-alpha.run",
+      "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-8ea8-820e-997d-a18478af364b/raw?se=2026-11-14T02%3A54%3A37Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A24%3A46Z&ske=2026-11-14T19%3A24%3A46Z&sks=b&skv=2026-06-06&sig=sHx%2BQLHE4s4wgZWEwbd7uQR3SoPdjARBC%2BZYtBmJg%2Bs%3D",
+      "sha256": "84908db9055825c93854966e4084ec99853dc97cb3656ac46057cb03d4ebf293",
+      "archive": true,
+      "archive_sha256": "3cce783ffffc9daf3c434a82e29b808a96f3b66a08d6f809150f230fdc6e7eab"
+    },
+    {
+      "kind": "windows",
+      "filename": "GSM-Setup-0.6.0-alpha.exe",
+      "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-17bc-820e-93bb-380c240ef551/raw?se=2026-11-14T02%3A54%3A32Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A38%3A49Z&ske=2026-11-14T19%3A38%3A49Z&sks=b&skv=2026-06-06&sig=TZuHX9WHSAdAYnI51TI3jtZJRrwQYfOGCzq9BrAms6o%3D",
+      "sha256": "d862ecf3a1647b1e709be63fea4a1ac255a4a0461adcbfccb0285e59233e08f8",
+      "archive": true,
+      "archive_sha256": "467dde8e331d80dbb6386a712915cc34e50aada0b693b2860a9719b007ce27ac"
+    },
+    {
+      "kind": "sources",
+      "filename": "GSM-Linux-Media-Sources-0.6.0-alpha.tar.gz",
+      "sha256": "c809715f5590ba630e26ad644460d97de1c2f7f02cf15ef9fbc99b4dcf9ed0a8",
+      "chunks": [
+        {
+          "filename": "GSM-Linux-Media-Sources-0.6.0-alpha.tar.gz.part-00",
+          "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-7200-820e-850b-b59940c9718e/raw?se=2026-11-14T02%3A54%3A20Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A29%3A29Z&ske=2026-11-14T19%3A29%3A29Z&sks=b&skv=2026-06-06&sig=vtw3tWeOUyO/PrGD1m4Sx9X%2BOEdGDK7OgN9Mt9t/90g%3D",
+          "sha256": "fd9d450dfb48f7fb85a21194e63d501ad93761dc88b540bb1dccc6d7b05da038",
+          "archive": true,
+          "archive_sha256": "9fee3857e127f139ea7335ff4a22426f7248e126de3eee1eb82c0efaae923ba3"
+        },
+        {
+          "filename": "GSM-Linux-Media-Sources-0.6.0-alpha.tar.gz.part-01",
+          "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-1ca8-820e-8b08-83600aefd8e4/raw?se=2026-11-14T02%3A54%3A12Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A41%3A16Z&ske=2026-11-14T19%3A41%3A16Z&sks=b&skv=2026-06-06&sig=wtkv9gADldpMSylcEIa0oY%2BxIBhfeU0y8bPMYqbiAvw%3D",
+          "sha256": "f28f68511d4a69ad24c3be731e0e6d33ab50e48decb762da7b5153780ad1297d",
+          "archive": true,
+          "archive_sha256": "e6a4d46f837b20dd9a3e2735932a0fd0edafd2d45de8658d63a49aa817d6321a"
+        }
+      ]
+    }
+  ]
+}
