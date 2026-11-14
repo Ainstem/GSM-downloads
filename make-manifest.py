@@ -9,7 +9,7 @@ source=root/f'GSM-Linux-Media-Sources-{version}.tar.gz'
 if not source.is_file(): raise SystemExit('Corresponding media sources must be published with the installers')
 files={'linux-x86_64':f'GSM-Linux-x86_64-{version}.run','windows-x64':f'GSM-Setup-{version}.exe'}
 metadata=json.loads(Path(sys.argv[3]).read_text()) if len(sys.argv)>3 else {}
-manifest={'version':version,'release_title':str(metadata.get('title') or '')[:160],
+manifest={'version':version,'release_title':str(metadata.get('name') or metadata.get('title') or '')[:160],
           'release_notes':str(metadata.get('body') or '')[:12000],'platforms':{}};checksums=[]
 for platform,name in files.items():
     with (root/name).open('rb') as stream:
