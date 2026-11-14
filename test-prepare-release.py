@@ -7,6 +7,13 @@ class Test(unittest.TestCase):
    assets.append({'kind':kind,'filename':name,'sha256':'a'*64,'url':'https://github.com/Ainstem/GSM-downloads/releases/download/v0.6.0-alpha/'+name})
   return {'version':'0.6.0-alpha','notes':'## Novidades\n- Perfil 🎮','source_commit':'a'*40,'assets':assets}
  def test_request(self):self.assertEqual(len(m.validate_request(self.fixture())),3)
+ def test_signed_github_asset_host_allowed(self):
+  data=self.fixture();data['assets'][0]['url']='https://release-assets.githubusercontent.com/github-production-release-asset/selected?sig=temporary'
+  self.assertEqual(len(m.validate_request(data)),3)
+ def test_github_asset_lookalike_refused(self):
+  for host in ['release-assets.githubusercontent.com.evil.example','evil-release-assets.githubusercontent.com','127.0.0.1']:
+   data=self.fixture();data['assets'][0]['url']='https://'+host+'/file'
+   with self.assertRaises(ValueError):m.validate_request(data)
  def test_incomplete_refused(self):
   data=self.fixture();data['assets'].pop()
   with self.assertRaises(ValueError):m.validate_request(data)

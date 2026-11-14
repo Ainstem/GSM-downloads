@@ -32,7 +32,7 @@ def validate_request(data):
                 if part.get('filename')!=item['filename']+f'.part-{index:02d}':raise ValueError('Unexpected source chunk order')
         for part in parts or [item]:
             address=urllib.parse.urlsplit(part.get('url',''));host=address.hostname or ''
-            if address.scheme!='https' or address.username or address.password or address.fragment or not(host=='github.com' or host.endswith('.oaiusercontent.com')):
+            if address.scheme!='https' or address.username or address.password or address.fragment or not(host in ('github.com','release-assets.githubusercontent.com') or host.endswith('.oaiusercontent.com')):
                 raise ValueError('Untrusted release transfer URL')
             for name in ['sha256']+(['archive_sha256'] if part.get('archive') else []):
                 if not re.fullmatch(r'[a-f0-9]{64}',part.get(name,'')):raise ValueError('Missing SHA256 for release transfer')
