@@ -1,30 +1,46 @@
 {
-  "version": "0.6.1-alpha",
-  "title": "GSM 0.6.1-alpha",
-  "source_commit": "da848495dfa20bef217ca41beb61dece3299dc12",
-  "validation_run": 43554651630,
-  "notes": "# GSM 0.6.1-alpha\n\n## Correção da captura no Linux\n- Inclui os plugins SPA e os módulos do cliente PipeWire que faltavam no instalador.\n- Corrige a falha `can’t make support.system handle` ao ativar o replay após selecionar a tela no Wayland.\n- O gravador carrega seus componentes PipeWire compatíveis com a biblioteca incluída, sem depender dos caminhos de plugins da distribuição e sem alterar o serviço de áudio/vídeo do sistema.\n- Preserva os clipes, o perfil, o login e as configurações existentes durante a atualização.\n\nO seletor de tela do Linux continua exigindo autorização do usuário. Esta correção trata da inicialização do PipeWire; a captura no compositor e na GPU de cada PC ainda precisa ser validada no próprio equipamento.\n\n## Interface e personalização\n- Nova seção Personalizar para nome, foto e cor de destaque, com preferências salvas.\n- Menus, seletores e diálogos com bordas, cores e tamanhos consistentes.\n- Títulos e navegação mais compactos; controles de reprodução discretos e linha do tempo menor para dar mais espaço ao vídeo.\n- Avisos longos ficam resumidos e podem ser consultados em Detalhes, sem ocupar a área do editor.\n- Cursor de mão nas ações clicáveis e lista de telas conectadas atualizada ao conectar/remover monitores.\n- Navegação no topo com Biblioteca, Replay e Configurações; cartões com miniatura e controles organizados em painéis responsivos.\n- Nome e foto importados do Discord podem ser personalizados no GSM, com alterações lembradas por conta sem modificar o perfil no Discord.\n- Opções dos seletores e menus têm divisórias discretas; clicar novamente no mesmo botão fecha o menu.\n- Primeiro acesso em uma tela simples e compacta; a escolha de login continua aparecendo apenas uma vez.\n",
+  "version": "0.7.0-alpha",
+  "title": "GSM 0.7.0-alpha",
+  "source_commit": "7ce46237b3927b24a35ff692319d3f48e68d94de",
+  "validation_run": 43560835933,
+  "notes": "# GSM 0.7.0-alpha\n\n## Captura\n- Print direto da tela em PNG, com atalho separado F8 e pasta Prints; imagens ficam em uma aba própria, sem misturar com vídeos.\n- Selecionar área congela a tela para recortar antes de salvar. Esc cancela sem criar uma imagem na biblioteca.\n- Gravação manual acessível na página inicial: inicie em Gravar tela e use o atalho de salvar para finalizar o vídeo completo e voltar ao replay.\n- Preferência para iniciar o replay automaticamente com o app, preservada entre sessões.\n- Duração de replay personalizável de 10 a 3600 segundos. Buffers maiores consomem mais memória; a gravação manual escreve em disco e não usa esse limite de duração.\n- Indicador flutuante opcional com quatro posições e sons distintos para ações de captura.\n\n## Correções\n- Menus deixam de abrir como uma faixa vertical: largura explícita, divisórias e fechamento pelo mesmo botão.\n- Exclusão libera o player e permite esvaziar a biblioteca, preservando o uso da lixeira.\n- Abrir pasta abre o destino dos clipes; Mostrar na pasta seleciona o arquivo pelo Explorer ou pela interface FileManager1 do Linux. Gerenciadores sem essa interface abrem a pasta como alternativa.\n- Seletor de cores e ajustes para janelas menores; controles duplicados de minimizar/maximizar removidos no Linux.\n- Rich Presence procura o cliente da conta correta antes de avisar sobre divergência, aceita IDs numéricos exatos e não interpreta uma identidade ausente como outra conta.\n- Configurações, perfil, escolha inicial de login e armazenamento protegido da sessão permanecem nos mesmos locais durante a atualização.\n\n- No Linux sem Secret Service, o chaveiro do kernel pode preservar a sessão durante reinícios do app e atualizações; esse recurso depende do kernel e não substitui o chaveiro persistente após reiniciar o PC.\n\n## Validação e limites\nOs testes automatizados de Linux e Windows passaram, incluindo captura e gravação manual no Windows Server 2022 e instalação sobre a 0.6.1 preservando clipes, preferências e credenciais salvas. A captura em Windows 10 físico e em um compositor Wayland real ainda precisa de validação no equipamento.\nA autorização da captura/print no Wayland é controlada pelo desktop. O posicionamento de janelas flutuantes e a sobreposição a jogos em tela exclusiva dependem do sistema/compositor.\n\n",
   "assets": [
     {
       "kind": "linux",
-      "filename": "GSM-Linux-x86_64-0.6.1-alpha.run",
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.6.1-alpha/GSM-Linux-x86_64-0.6.1-alpha.run",
-      "sha256": "71ab2b74bb80a8804a4bb17cfff0a588b4b8e70767d2c54727050ec61549e893",
-      "archive": false
+      "filename": "GSM-Linux-x86_64-0.7.0-alpha.run",
+      "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-5080-820e-9729-f34949524996/raw?se=2026-11-14T07%3A25%3A55Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T18%3A27%3A08Z&ske=2026-11-14T18%3A27%3A08Z&sks=b&skv=2026-06-06&sig=ZrSu4yj4HEFoT1Vr70kCss31Gde3fAEYBiYpX62VOcw%3D",
+      "sha256": "3a91ab0896ad4eb8f61fcffa6d9421bf56a5056b617d6d35c5a50f50ca123037",
+      "archive": true,
+      "archive_sha256": "aa73cb7bda6d613f04be0fb800d3688ee6f618904efb38d58c20730dc9e48901"
     },
     {
       "kind": "windows",
-      "filename": "GSM-Setup-0.6.1-alpha.exe",
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.6.1-alpha/GSM-Setup-0.6.1-alpha.exe",
-      "sha256": "cdf2cfd2461956b9beb8f762a1eb12f67ba797b76a551d085bcca4ae66904d34",
-      "archive": false
+      "filename": "GSM-Setup-0.7.0-alpha.exe",
+      "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-935c-820e-86f7-c16305d0591c/raw?se=2026-11-14T07%3A25%3A51Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A20%3A10Z&ske=2026-11-14T19%3A20%3A10Z&sks=b&skv=2026-06-06&sig=2%2B7ePkMoqkeJj0WlkqBk8HxoAr2Gggeykcs5OsXuV28%3D",
+      "sha256": "f36e736938a234d915f57fd934c8647b2e12ac272795794fa829ce49727ef3ee",
+      "archive": true,
+      "archive_sha256": "0a09c9d1cb21274b615ea3b0c29feedd1efbf7c920ede93fa502111d5073f03c"
     },
     {
       "kind": "sources",
-      "filename": "GSM-Linux-Media-Sources-0.6.1-alpha.tar.gz",
-      "sha256": "8859f411d25a06ca4d1565dcad215792303faf92776802d86e0f6d5d3a7e8d63",
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.6.1-alpha/GSM-Linux-Media-Sources-0.6.1-alpha.tar.gz",
-      "archive": false
+      "filename": "GSM-Linux-Media-Sources-0.7.0-alpha.tar.gz",
+      "sha256": "c04d6db7a40f022b74c7076605121a6762e01bcbe8f41f4899e04adefb7c339b",
+      "chunks": [
+        {
+          "filename": "GSM-Linux-Media-Sources-0.7.0-alpha.tar.gz.part-00",
+          "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-d5f8-820e-96f7-94890bf01526/raw?se=2026-11-14T07%3A25%3A20Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A20%3A10Z&ske=2026-11-14T19%3A20%3A10Z&sks=b&skv=2026-06-06&sig=fwvkkDBr1cUuDNsh5ItlXIpg3M%2Bupc7UvLICQYTjeOw%3D",
+          "sha256": "685c40591f6256b54fb4a80cab16cae3b05b673bb7abfbd29b3de8c093a81d56",
+          "archive": true,
+          "archive_sha256": "398be45170f1a2bf98cd0e5447d00eb3dd384ef8695840061014e8ab980e2700"
+        },
+        {
+          "filename": "GSM-Linux-Media-Sources-0.7.0-alpha.tar.gz.part-01",
+          "url": "https://sdmntprbrazilsouth.oaiusercontent.com/files/00000000-9fb0-820e-b0e8-0ad4be29a187/raw?se=2026-11-14T07%3A25%3A20Z&sp=r&sv=2026-06-06&sr=b&scid=29f908e2-e5bd-4dcb-b6d7-746c85f68efd&skoid=68f37fa7-4e08-478b-93f3-c72d563a0ab3&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-11-13T19%3A29%3A40Z&ske=2026-11-14T19%3A29%3A40Z&sks=b&skv=2026-06-06&sig=QrG/ubtMXqF07jkj6gWCpBfB064fV9sK9lcSrelpOHk%3D",
+          "sha256": "9c1df140fc24e8f68fdb1ca28c97bdef716607669366e0d999bff284768f9e29",
+          "archive": true,
+          "archive_sha256": "a34f320031eac3fcebba984d4c385c73bb587d9f0f14acfa227526f0d34c92a9"
+        }
+      ]
     }
   ]
 }
