@@ -1,31 +1,29 @@
 {
-  "version": "0.8.0-alpha",
-  "title": "GSM 0.8.0-alpha",
-  "source_commit": "e0758e7174c2dd06a8286d9bb52513af2ae97cf4",
-  "validation_run": 43634125153,
-  "merge_commit": "4944ef697ebea286dd7edfadf2a11d94e5792c6e",
-  "notes": "# GSM 0.8.0-alpha\n\n## Conta e perfil\n- Correção da perda da sessão Discord após reiniciar o PC no Linux sem chaveiro persistente: credenciais criptografadas em armazenamento local exclusivo do usuário, mantendo o chaveiro do sistema e o DPAPI no Windows.\n- Perfil restaurado durante falhas temporárias de rede, com reconexão automática e persistência dos tokens renovados.\n- Correção do aviso falso de conta diferente em clientes que usam a identidade fictícia do arRPC, como algumas instalações do Vesktop. A verificação das identidades reais continua ativa.\n- Nome e foto personalizados permanecem editáveis; configurações e dados existentes são preservados na atualização.\n\n## Prints e sons\n- F8, ou o atalho já configurado, abre uma barra com Tela inteira e Selecionar área. Esc cancela.\n- No Niri, o print usa a captura do compositor quando o portal Screenshot está indisponível; o recorte continua dentro do GSM.\n- Imagens são salvas na pasta Prints e na aba própria, separadas dos vídeos.\n- Apenas dois sons de confirmação: clipe salvo e print salvo. O atalho de print fica junto ao de clipe.\n\n## Aparência e idiomas\n- Seletor de cor integrado ao app, sem janela externa.\n- Quatro temas locais: GSM clássico, Meia-noite, Ametista e Floresta.\n- Imagem de fundo local com intensidade ajustável, copiada para os dados do GSM para não depender do arquivo original.\n- Interface em português, inglês, espanhol, russo e japonês, com preferência de idioma salva.\n- Configurações mais compactas, colunas independentes e rolagem sem o efeito de pulinho.\n\n## Validação e limites\nTestes automatizados de Linux e Windows passaram, incluindo prints, recorte, gravação manual, replay, biblioteca, perfil e instalação sobre a 0.7 preservando clipes, configurações e credenciais salvas. A captura Windows foi validada no Windows Server 2022 com adaptador de software; não equivale a testar cada GPU no Windows 10 físico.\n\nNa gravação Wayland, o backend atual continua usando o portal do desktop e reutilizando a autorização salva. O compositor/portal decide se aceita restaurá-la após reiniciar; pode solicitar consentimento novamente. A seleção de outro monitor ainda utiliza o seletor autorizado do sistema.\n",
+  "version": "0.9.0-alpha",
+  "title": "GSM 0.9.0-alpha",
+  "source_commit": "ddf067c823b7ec02b153a9a1d9f410d0369e3246",
+  "validation_run": 43644561172,
+  "merge_commit": "a395fbca6efcc97ae782a2fc3e818c27b52355a1",
+  "notes": "# GSM 0.9.0-alpha\n\n## Prints\n- F8, ou o atalho personalizado já salvo, captura a tela em uso antes de abrir o seletor.\n- Tela inteira salva diretamente; Selecionar área permite arrastar o recorte sobre a imagem capturada. Esc cancela.\n- Correção do seletor preto e da escolha do monitor: no Niri usa a saída focada, no Windows a tela da janela ativa e em X11 a tela sob o cursor.\n- O monitor dos prints é independente do monitor escolhido para o replay.\n\n## Captura e interface\n- Indicador flutuante aparece apenas ao gravar tela manualmente.\n- Sons padrão para clipe e print, sem configurações extras de som.\n- Um único controle de Print permite configurar o atalho, preservando teclas personalizadas.\n- Monitor e Experiência acessíveis nas ações rápidas. Desktop captura o monitor selecionado.\n- Jogo no Windows aguarda uma captura nativa do OBS em tela cheia, sem gravar o desktop enquanto espera. Ao perder a captura, o replay limpa o buffer antes de retomá-la.\n- No Linux/Wayland, Jogo permite escolher manualmente a janela no portal; não há reconhecimento automático de jogos nesse backend.\n- Compartilhamento por arraste de arquivo para qualquer aplicativo compatível, sem direcionamento ao Discord.\n- Removidos aviso permanente de atalho no Niri e botão duplicado de salvar clipe.\n- Cards de clipes e prints, campos e menus acompanham a paleta do tema escolhido.\n- Alterar a experiência com o replay desligado mantém o replay desligado.\n\n## Compatibilidade e validação\nConfigurações, atalhos personalizados, clipes, perfil e credenciais existentes são preservados. Testes de Linux e Windows passaram, incluindo captura, replay, prints, recorte, interface, empacotamento e instalação sobre a 0.8.\n\nCaptura validada em desktop virtual Linux e Windows Server 2022 com adaptador de software. Não equivale a testar todos os monitores, GPUs, jogos e anticheats. No Wayland, a autorização e seleção de outra tela continuam sujeitas ao portal do sistema.\n",
   "assets": [
     {
       "kind": "linux",
-      "filename": "GSM-Linux-x86_64-0.8.0-alpha.run",
-      "sha256": "146c9e831bd3a57ce69cfac2f5fd15897dd6f4baf84e2aecf080935376897687",
-      "archive": false,
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.8.0-alpha/GSM-Linux-x86_64-0.8.0-alpha.run"
+      "filename": "GSM-Linux-x86_64-0.9.0-alpha.run",
+      "sha256": "376ccdd5e2324e3b44a06b1b21f61f3e22c849fd93aa2eba2001ac62c8014f06",
+      "archive": false
     },
     {
       "kind": "windows",
-      "filename": "GSM-Setup-0.8.0-alpha.exe",
-      "sha256": "21f993d45c74eefa6761099f897843381dde32452e3306be84c0b67ac2dea6f2",
-      "archive": false,
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.8.0-alpha/GSM-Setup-0.8.0-alpha.exe"
+      "filename": "GSM-Setup-0.9.0-alpha.exe",
+      "sha256": "7c686454c48c23f5699010342373d1213249738b5f0a4be93919e62ae1766fd7",
+      "archive": false
     },
     {
       "kind": "sources",
-      "filename": "GSM-Linux-Media-Sources-0.8.0-alpha.tar.gz",
+      "filename": "GSM-Linux-Media-Sources-0.9.0-alpha.tar.gz",
       "sha256": "c04d6db7a40f022b74c7076605121a6762e01bcbe8f41f4899e04adefb7c339b",
-      "archive": false,
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.8.0-alpha/GSM-Linux-Media-Sources-0.8.0-alpha.tar.gz"
+      "archive": false
     }
-  ]
+  ],
+  "sealed_transfer": true
 }
