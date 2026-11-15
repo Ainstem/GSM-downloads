@@ -1,31 +1,32 @@
 {
-  "version": "0.9.0-alpha",
-  "title": "GSM 0.9.0-alpha",
-  "source_commit": "ddf067c823b7ec02b153a9a1d9f410d0369e3246",
-  "validation_run": 43644561172,
-  "merge_commit": "a395fbca6efcc97ae782a2fc3e818c27b52355a1",
-  "notes": "# GSM 0.9.0-alpha\n\n## Prints\n- F8, ou o atalho personalizado já salvo, captura a tela em uso antes de abrir o seletor.\n- Tela inteira salva diretamente; Selecionar área permite arrastar o recorte sobre a imagem capturada. Esc cancela.\n- Correção do seletor preto e da escolha do monitor: no Niri usa a saída focada, no Windows a tela da janela ativa e em X11 a tela sob o cursor.\n- O monitor dos prints é independente do monitor escolhido para o replay.\n\n## Captura e interface\n- Indicador flutuante aparece apenas ao gravar tela manualmente.\n- Sons padrão para clipe e print, sem configurações extras de som.\n- Um único controle de Print permite configurar o atalho, preservando teclas personalizadas.\n- Monitor e Experiência acessíveis nas ações rápidas. Desktop captura o monitor selecionado.\n- Jogo no Windows aguarda uma captura nativa do OBS em tela cheia, sem gravar o desktop enquanto espera. Ao perder a captura, o replay limpa o buffer antes de retomá-la.\n- No Linux/Wayland, Jogo permite escolher manualmente a janela no portal; não há reconhecimento automático de jogos nesse backend.\n- Compartilhamento por arraste de arquivo para qualquer aplicativo compatível, sem direcionamento ao Discord.\n- Removidos aviso permanente de atalho no Niri e botão duplicado de salvar clipe.\n- Cards de clipes e prints, campos e menus acompanham a paleta do tema escolhido.\n- Alterar a experiência com o replay desligado mantém o replay desligado.\n\n## Compatibilidade e validação\nConfigurações, atalhos personalizados, clipes, perfil e credenciais existentes são preservados. Testes de Linux e Windows passaram, incluindo captura, replay, prints, recorte, interface, empacotamento e instalação sobre a 0.8.\n\nCaptura validada em desktop virtual Linux e Windows Server 2022 com adaptador de software. Não equivale a testar todos os monitores, GPUs, jogos e anticheats. No Wayland, a autorização e seleção de outra tela continuam sujeitas ao portal do sistema.\n",
+  "version": "0.10.1-alpha",
+  "title": "GSM 0.10.1-alpha",
+  "source_commit": "ebac2a68c227f078482360e05c5b2a5ebd57c846",
+  "validation_run": 43708486987,
+  "merge_commit": "b3428c0d9f88539fec3c0903d77295b060579d95",
+  "sealed_transfer": true,
+  "notes": "# GSM 0.10.1-alpha\n\n- Novo login com Discord: conta de compartilhamento e permissão para receber clipes no mesmo fluxo, sem códigos ou comandos no uso normal. A atualização pede login novamente uma única vez; configurações e clipes locais são preservados.\n- Trocar o Discord troca também a sessão de compartilhamento, cancelando transferências da conta anterior.\n- Contatos discretos na biblioteca, com contador de clipes não lidos e nomes longos abreviados.\n- Clicar em um contato abre a conversa de clipes enviados e recebidos. O × fecha o painel e devolve o espaço à biblioteca.\n- Envio pela biblioteca do próprio GSM, com seleção de clipes e confirmação por Enter. Os selecionados são enviados em sequência.\n- Notificações identificam quem enviou, o nome do clipe e o horário. Abrir a conversa marca os recebidos como lidos, com persistência no servidor.\n- Assistir no GSM busca e verifica o original antes de abrir o player integrado. Nenhum vídeo é baixado automaticamente ao receber um aviso.\n- O original fica disponível por 10 horas após o upload; o remetente pode fechar o app ou desligar o PC após a confirmação.\n- A DM do bot oferece download direto sem novo login ou convite para instalar o GSM. O link é exclusivo, expira e permite baixar a qualquer pessoa que o tenha; bloqueio e cotas continuam valendo.\n- Vídeos de até 10 MiB podem acompanhar a DM como anexo. Se não couberem ou o Discord rejeitar, o link do original continua disponível.\n- Receber de novos contatos sem aprovar cada pedido pode ser desativado em Conta. Bloqueios são respeitados; amigos do Discord não são importados automaticamente.\n- Arrastar para outros aplicativos continua disponível. Captura e edição locais funcionam sem login.\n\n## Validação\n\nTestes nativos de UI, conta, atualização, reprodução, envio, integridade e isolamento de contas; testes de API com SQLite e Postgres com TLS. O fluxo anterior de duas contas, DM real e download íntegro foi confirmado pelo mantenedor. Novos fluxos são cobertos pelos testes descritos no PR e builds de Linux e Windows.\n\n## Limites\n\nHospedagem gratuita pode levar mais tempo na primeira conexão. Espaço e downloads possuem cotas globais; não é armazenamento ilimitado. As consultas são periódicas, sem baixar vídeos em segundo plano. O histórico carregado nesta versão contém os últimos 100 envios da conta. A limpeza física depende da execução da API e das regras do bucket, enquanto a expiração de acesso é aplicada pelo serviço. Não há chat de texto, transferência P2P ou retomada persistente de upload.\n\nGSM: GPL-3.0-or-later. Fontes correspondentes da mídia acompanham a Release.\n",
   "assets": [
     {
       "kind": "linux",
-      "filename": "GSM-Linux-x86_64-0.9.0-alpha.run",
-      "sha256": "376ccdd5e2324e3b44a06b1b21f61f3e22c849fd93aa2eba2001ac62c8014f06",
+      "filename": "GSM-Linux-x86_64-0.10.1-alpha.run",
+      "sha256": "fc0cd09d5feb6b0948f16902aee602f506dad91097375192717ef1cdd2817580",
       "archive": false,
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.9.0-alpha/GSM-Linux-x86_64-0.9.0-alpha.run"
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.10.1-alpha/GSM-Linux-x86_64-0.10.1-alpha.run"
     },
     {
       "kind": "windows",
-      "filename": "GSM-Setup-0.9.0-alpha.exe",
-      "sha256": "7c686454c48c23f5699010342373d1213249738b5f0a4be93919e62ae1766fd7",
+      "filename": "GSM-Setup-0.10.1-alpha.exe",
+      "sha256": "35752aa65cb09873339f4cd28ec7dfe76a250cedab187cb93b238b2ace6af9f8",
       "archive": false,
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.9.0-alpha/GSM-Setup-0.9.0-alpha.exe"
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.10.1-alpha/GSM-Setup-0.10.1-alpha.exe"
     },
     {
       "kind": "sources",
-      "filename": "GSM-Linux-Media-Sources-0.9.0-alpha.tar.gz",
+      "filename": "GSM-Linux-Media-Sources-0.10.1-alpha.tar.gz",
       "sha256": "c04d6db7a40f022b74c7076605121a6762e01bcbe8f41f4899e04adefb7c339b",
       "archive": false,
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.9.0-alpha/GSM-Linux-Media-Sources-0.9.0-alpha.tar.gz"
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.10.1-alpha/GSM-Linux-Media-Sources-0.10.1-alpha.tar.gz"
     }
   ]
 }
