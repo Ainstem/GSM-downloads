@@ -1,4 +1,4 @@
-import importlib.util,tempfile,pathlib,zipfile,hashlib,io,unittest
+import importlib.util,tempfile,pathlib,zipfile,hashlib,io,unittest,json,subprocess,sys
 spec=importlib.util.spec_from_file_location('transfer',str(pathlib.Path(__file__).parent/'prepare-release.py'));m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 class Test(unittest.TestCase):
  def fixture(self):
@@ -7,6 +7,26 @@ class Test(unittest.TestCase):
    assets.append({'kind':kind,'filename':name,'sha256':'a'*64,'url':'https://github.com/Ainstem/GSM-downloads/releases/download/v0.6.0-alpha/'+name})
   return {'version':'0.6.0-alpha','notes':'## Novidades\n- Perfil 🎮','source_commit':'a'*40,'assets':assets}
  def test_request(self):self.assertEqual(len(m.validate_request(self.fixture())),3)
+ def windows_fixture(self):
+  data=self.fixture();data['version']='0.10.2-alpha.windows.1';data['target_platforms']=['windows-x64'];data['assets']=[data['assets'][1]]
+  data['assets'][0]['filename']='GSM-Setup-0.10.2-alpha.windows.1.exe'
+  return data
+ def test_explicit_windows_hotfix(self):self.assertEqual(set(m.validate_request(self.windows_fixture())),{'windows'})
+ def test_windows_hotfix_requires_scope_and_matching_revision(self):
+  for value in [None,[],['linux-x86_64'],['windows-x64','linux-x86_64']]:
+   data=self.windows_fixture();data['target_platforms']=value
+   with self.assertRaises(ValueError):m.validate_request(data)
+  data=self.windows_fixture();data['version']='0.10.3-alpha'
+  with self.assertRaises(ValueError):m.validate_request(data)
+ def test_windows_hotfix_manifest_does_not_offer_linux_an_update(self):
+  script=pathlib.Path(__file__).parent.resolve()/'make-manifest.py'
+  with tempfile.TemporaryDirectory() as directory:
+   root=pathlib.Path(directory);installer=root/'GSM-Setup-0.10.2-alpha.windows.1.exe';installer.write_bytes(b'MZchecked installer')
+   (root/'metadata.json').write_text(json.dumps({'target_platforms':['windows-x64'],'name':'GSM Windows hotfix','body':'Windows only; Linux remains on 0.10.2-alpha.'}))
+   subprocess.run([sys.executable,str(script),'v0.10.2-alpha.windows.1',str(root),str(root/'metadata.json')],cwd=root,check=True)
+   manifest=json.loads((root/'update.json').read_text());self.assertEqual(set(manifest['platforms']),{'windows-x64'})
+   self.assertEqual(manifest['version'],'0.10.2-alpha.windows.1');self.assertEqual(manifest['platforms']['windows-x64']['sha256'],hashlib.sha256(installer.read_bytes()).hexdigest())
+   self.assertEqual(len((root/'SHA256SUMS').read_text().splitlines()),1)
  def test_signed_github_asset_host_allowed(self):
   data=self.fixture();data['assets'][0]['url']='https://release-assets.githubusercontent.com/github-production-release-asset/selected?sig=temporary'
   self.assertEqual(len(m.validate_request(data)),3)

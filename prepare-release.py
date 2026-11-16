@@ -19,9 +19,14 @@ def validate_request(data):
     if not re.fullmatch(r'\d+\.\d+\.\d+(?:-[A-Za-z0-9.-]+)?',version):
         raise ValueError('Invalid release version')
     expected={'linux':f'GSM-Linux-x86_64-{version}.run','windows':f'GSM-Setup-{version}.exe','sources':f'GSM-Linux-Media-Sources-{version}.tar.gz'}
+    targets=data.get('target_platforms')
+    if targets is not None:
+        if targets!=['windows-x64'] or not re.fullmatch(r'\d+\.\d+\.\d+-alpha\.windows\.[1-9]\d*',version):
+            raise ValueError('Only an explicit Windows hotfix may target a single platform')
+        expected={'windows':expected['windows']}
     assets=data.get('assets',[])
-    if len(assets)!=3 or {a.get('kind') for a in assets}!=set(expected):
-        raise ValueError('Exactly the Linux installer, Windows installer and corresponding sources are required')
+    if len(assets)!=len(expected) or {a.get('kind') for a in assets}!=set(expected):
+        raise ValueError('Exactly the explicitly targeted release files are required')
     for item in assets:
         if item.get('filename')!=expected[item['kind']]: raise ValueError('Unexpected asset filename')
         if not re.fullmatch(r'[a-f0-9]{64}',item.get('sha256','')):raise ValueError('Missing release file SHA256')
@@ -95,6 +100,7 @@ def main():
         futures=[pool.submit(materialize,item,directory) for item in request['assets']]
         for future in futures:future.result()
     metadata={'name':request.get('title','GSM '+request['version'])[:160],'body':request['notes']}
+    if 'target_platforms' in request:metadata['target_platforms']=request['target_platforms']
     Path('release-info.json').write_text(json.dumps(metadata,ensure_ascii=False)+'\n')
     Path('release-notes.md').write_text(request['notes']+'\n')
     if os.environ.get('GITHUB_OUTPUT'):
