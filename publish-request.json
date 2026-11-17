@@ -1,29 +1,30 @@
 {
-  "version": "0.11.0-alpha",
-  "title": "GSM 0.11.0-alpha — biblioteca, editor e conversas",
-  "notes": "# GSM 0.11.0-alpha\n\nAtualização geral para Windows e Linux, voltando ao mesmo número nas duas plataformas.\n\n- Biblioteca com favoritos de clipes e prints, álbuns, seleção pelo botão direito e envio em lote de até três clipes dentro da cota de bytes.\n- Lixeira exclusiva do GSM, com restauração, exclusão definitiva e retenção opcional.\n- Configurações por categoria, seletor compacto, três cores personalizadas, logo seguindo o destaque e transparência ajustável.\n- Captura em segundo plano ao fechar a janela; Encerrar GSM no perfil para finalizar o aplicativo.\n- Controle de FPS entre 15 e 240 e resolução nativa, 480p, 720p, 1080p, 1440p e 2160p, conforme suporte da fonte e do hardware.\n- Editor com remoção de trechos internos, desfazer e exportação de cópia, além de ondas reais das faixas de áudio.\n- Mensagem opcional anexada ao clipe, reações e vídeo embutido na conversa com tela cheia. Esses recursos exigem o serviço atualizado.\n- Ativação de recebimento pelo login Discord, com instalação e teste de DM no próprio fluxo. Privacidade e bloqueios do Discord podem impedir a DM; o recebimento no GSM é independente.\n- RAM, CPU e espaço livre no Replay; GPU indicada como indisponível quando não medida.\n- Progresso real de download, instalador gráfico Linux e diagnósticos de compartilhamento mais claros.\n\nEsta atualização pede login novamente uma vez para validar o novo fluxo do Discord. Clipes, perfil, atalhos e preferências são preservados. Álbuns automáticos dependem da identificação fornecida pela captura de jogo. Transparência depende do compositor do sistema.\n\nA correção anterior do monitor Windows permanece incluída; a confirmação em uso no PC do Lucky ainda está pendente.\n\nFontes correspondentes do aplicativo acompanham os pacotes. As fontes da mídia Linux são distribuídas separadamente na mesma versão.\n\nValidação: CI Linux, Windows e serviço aprovados. Os sete testes nativos de captura Windows passaram, assim como a instalação sobre 0.10.2 e a migração de login preservando clipes e preferências.\n",
-  "source_commit": "bf8f5656432266bf4e337714617e70b3bc491d8e",
-  "validation_run": 43974371823,
+  "version": "0.12.0-alpha",
+  "title": "GSM 0.12.0-alpha — interface ice e menor uso de RAM",
+  "notes": "# GSM 0.12.0-alpha\n\nAtualização para Windows e Linux com interface glass discreta e menor consumo de memória.\n\n- Conversas sem balões, avatares maiores e reprodução direta. Vídeos carregam apenas durante o uso; corrigida a reabertura de arquivos locais.\n- Álbuns em galeria, favoritos com estrela dourada e reações com emojis padrão coloridos pelo menu de contexto.\n- Editor com painel lateral, cortes, desfazer/refazer, zoom e volume por faixa. O clipe salvo abre automaticamente.\n- Aparência, conta e armazenamento reorganizados; seletor de cores compacto, sliders suaves e quatro presets pessoais.\n- Linux usa buffer de replay em disco por padrão para reduzir RAM. Isso grava continuamente enquanto o replay está ativo; é possível escolher RAM nas configurações. Windows mantém o buffer de captura em memória.\n- Ondas de áudio processadas com memória limitada; imagens sem ampliação desnecessária. Indicadores separam aplicativo, captura e auxiliares; GPU aparece quando o driver fornece medição compatível.\n\nEm teste local controlado com 100 mensagens, sem captura ativa, a memória da interface caiu de aproximadamente 188 MiB para 94 MiB. O consumo real depende do hardware, configuração e duração do replay; não é uma garantia de 32 MB.\n\nClipes, atalhos e preferências existentes são preservados. A ativação do Discord continua no login; entrega de DM depende das permissões do destinatário.\n\nValidação: Linux e Windows aprovados no CI, incluindo reprodução, ondas de áudio, volume exportado, captura nativa e atualização sobre a versão anterior preservando clipes e preferências.\n",
+  "source_commit": "410aea1a1272a4795fa6100547ebf912a2c58aa4",
+  "validation_run": 44010754303,
+  "sealed_transfer": true,
   "assets": [
     {
       "kind": "linux",
-      "filename": "GSM-Linux-x86_64-0.11.0-alpha.run",
-      "sha256": "f108c2e53df738c80b2b45fc8a3145a1da5e562a51dc9da0daba2b1d3741fc72",
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.11.0-alpha/GSM-Linux-x86_64-0.11.0-alpha.run",
+      "filename": "GSM-Linux-x86_64-0.12.0-alpha.run",
+      "sha256": "f5c85b347aa47ae39c87eeb3f1439e0bae54f5f5da5d176df2911f52fb3b83ba",
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.12.0-alpha/GSM-Linux-x86_64-0.12.0-alpha.run",
       "archive": false
     },
     {
       "kind": "windows",
-      "filename": "GSM-Setup-0.11.0-alpha.exe",
-      "sha256": "c3319077c7ddaded8006de6fd696a33eb37bf06d9ccd5a90d029605f8d63fa82",
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.11.0-alpha/GSM-Setup-0.11.0-alpha.exe",
+      "filename": "GSM-Setup-0.12.0-alpha.exe",
+      "sha256": "8b3fbf5fae62e97c97c68c8a271929072520cbb86fb50510c381f0957183131b",
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.12.0-alpha/GSM-Setup-0.12.0-alpha.exe",
       "archive": false
     },
     {
       "kind": "sources",
-      "filename": "GSM-Linux-Media-Sources-0.11.0-alpha.tar.gz",
-      "sha256": "d9684ac97d7bc1a30201979107b4a1eab31d7997d3fab469ec3fd8f6ab388b22",
-      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.11.0-alpha/GSM-Linux-Media-Sources-0.11.0-alpha.tar.gz",
+      "filename": "GSM-Linux-Media-Sources-0.12.0-alpha.tar.gz",
+      "sha256": "c04d6db7a40f022b74c7076605121a6762e01bcbe8f41f4899e04adefb7c339b",
+      "url": "https://github.com/Ainstem/GSM-downloads/releases/download/v0.12.0-alpha/GSM-Linux-Media-Sources-0.12.0-alpha.tar.gz",
       "archive": false
     }
   ]
