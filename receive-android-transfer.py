@@ -5,13 +5,14 @@ from cryptography.hazmat.primitives import hashes,serialization
 from cryptography.hazmat.primitives.asymmetric import rsa,padding
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 
-def decode(key,response,revision,fingerprint,source):
+def decode(key,response,revision,fingerprint,source,source_only=False):
     if response.get('request_commit')!=revision or response.get('key_sha256')!=fingerprint: raise ValueError('Wrong transfer request or key')
     aes=key.decrypt(base64.b64decode(response['wrapped_key'],validate=True),padding.OAEP(mgf=padding.MGF1(hashes.SHA256()),algorithm=hashes.SHA256(),label=None))
     nonce=base64.b64decode(response['nonce'],validate=True);cipher=base64.b64decode(response['ciphertext'],validate=True)
     if len(aes)!=32 or len(nonce)!=12 or len(cipher)>32768:raise ValueError('Invalid transfer size')
     result=json.loads(AESGCM(aes).decrypt(nonce,cipher,revision.encode()))
-    if set(result)!={'source_commit','source_url','keystore_base64','store_password','alias'} or result['source_commit']!=source:raise ValueError('Unexpected build payload')
+    expected={'source_commit','source_url'} if source_only else {'source_commit','source_url','keystore_base64','store_password','alias'}
+    if set(result)!=expected or result['source_commit']!=source:raise ValueError('Unexpected build payload')
     return result
 
 def main():
@@ -34,8 +35,9 @@ def main():
             if e.code!=404:raise
             response={}
         if response.get('request_commit')==revision:
-            payload=decode(key,response,revision,fingerprint,request['source_commit'])
-            for name in ['source_url','keystore_base64','store_password']:print('::add-mask::'+payload[name],flush=True)
+            payload=decode(key,response,revision,fingerprint,request['source_commit'],os.environ.get('GSM_SOURCE_ONLY')=='1')
+            for name in ['source_url','keystore_base64','store_password']:
+                if name in payload:print('::add-mask::'+payload[name],flush=True)
             fd=os.open('android-private-build.json',os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
             with os.fdopen(fd,'w') as f:json.dump(payload,f)
             print('Protected build transfer received',flush=True);return
