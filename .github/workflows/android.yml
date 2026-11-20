@@ -43,7 +43,7 @@ jobs:
         run: python3 build-android.py sign
       - name: Prepare owned emulator
         run: |
-          sudo apt-get update && sudo apt-get install -y ffmpeg
+          if ! command -v ffmpeg >/dev/null || ! command -v ffprobe >/dev/null; then sudo apt-get update && sudo apt-get install -y ffmpeg; fi
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
