@@ -1,0 +1,77 @@
+name: Build and validate GSM Android
+on:
+  push:
+    branches: [main]
+    paths: [android-build-request.json]
+permissions:
+  contents: write
+concurrency:
+  group: gsm-android-release
+  cancel-in-progress: false
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Receive protected build transfer
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 -m venv /tmp/gsm-transfer-env
+          /tmp/gsm-transfer-env/bin/pip -q install cryptography==46.0.3
+          /tmp/gsm-transfer-env/bin/python receive-android-transfer.py
+          python3 build-android.py fetch
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-java@v4
+        with: {distribution: temurin, java-version: '17'}
+      - uses: android-actions/setup-android@v3
+        with: {packages: 'platform-tools platforms;android-36 build-tools;36.0.0'}
+      - uses: gradle/actions/setup-gradle@v4
+      - run: npm ci && npm run typecheck && npm test
+        working-directory: source/mobile
+      - name: Generate Android project and check permissions
+        working-directory: source/mobile
+        env: {CI: '1', EXPO_NO_TELEMETRY: '1'}
+        run: npx expo prebuild --clean --platform android --no-install && python tests/check_android_permissions.py
+      - name: Build bundled release
+        working-directory: source/mobile/android
+        env: {CI: '1', EXPO_NO_TELEMETRY: '1'}
+        run: ./gradlew assembleRelease -PreactNativeArchitectures=armeabi-v7a,arm64-v8a,x86_64 --no-daemon --max-workers=2
+      - name: Sign and validate release
+        run: python3 build-android.py sign
+      - name: Prepare owned emulator
+        run: |
+          sudo apt-get update && sudo apt-get install -y ffmpeg
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Test navigation, decoded replay and print on Android
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          target: google_apis
+          cores: 2
+          ram-size: 2048M
+          disable-animations: true
+          emulator-boot-timeout: 300
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -camera-front none
+          script: python source/mobile/tests/android_smoke.py GSM-Android-0.2.0-alpha.apk
+      - name: Publish validated Android APK
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          Path('android-release-notes.md').write_text('GSM para Android — 0.2.0 alpha\n\nTema GSM clássico, biblioteca de clipes e prints, álbuns, marcadores, lixeira, conversas e integração com a conta/nuvem GSM. Replay e gravação de tela nativos, com autorização do Android.\n\nAPK independente: não precisa de Expo Go ou de computador para abrir. Inclui ARM de 32/64 bits e x86_64. Instale o arquivo GSM-Android-0.2.0-alpha.apk.\n\nValidado em emulador Android 15: navegação, gravação/replay e print decodificados. Versão alpha para teste em aparelhos reais; não é uma publicação na Play Store. Álbuns e aparência são locais ao celular. A captura de áudio interno depende das permissões do aplicativo capturado.\n')
+          PY
+          if gh release view android-v0.2.0-alpha --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo 'Android release already exists; refusing replacement.'
+            exit 1
+          fi
+          gh release create android-v0.2.0-alpha GSM-Android-0.2.0-alpha.apk SHA256SUMS-Android.txt --repo "$GITHUB_REPOSITORY" --title 'GSM Android 0.2.0 alpha' --notes-file android-release-notes.md --prerelease --latest=false
+      - name: Remove transient signing material
+        if: always()
+        run: rm -f android-private-build.json
